@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Browse Quizzes{% endblock %}
+
+{% block content %}
+<h1>Browse Quizzes</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-4">
+                {{ filter_form.category }}
+            </div>
+            <div class="col-md-4">
+                {{ filter_form.difficulty }}
+            </div>
+            <div class="col-md-4">
+                {{ filter_form.search }}
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Filter</button>
+                <a href="{% url 'quizzes:quiz_list' %}" class="btn btn-secondary">Clear</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    {% for quiz in quizzes %}
+    <div class="col-md-4 mb-4">
+        <div class="card quiz-card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ quiz.title }}</h5>
+                <p class="card-text">{{ quiz.description|truncatewords:15 }}</p>
+                <div class="mb-2">
+                    <span class="badge bg-{{ quiz.difficulty }}">{{ quiz.get_difficulty_display }}</span>
+                    {% if quiz.category %}
+                    <span class="badge bg-secondary">{{ quiz.category.name }}</span>
+                    {% endif %}
+                </div>
+                <p class="text-muted mb-0"><small>{{ quiz.questions.count }} questions</small></p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'quizzes:quiz_detail' quiz.pk %}" class="btn btn-primary btn-sm">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info">No quizzes found.</div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

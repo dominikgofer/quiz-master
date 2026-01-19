@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Quiz History{% endblock %}
+{% block content %}
+<h1>My Quiz History</h1>
+<div class="table-responsive">
+<table class="table table-striped">
+<thead><tr><th>Quiz</th><th>Score</th><th>Date</th><th>Action</th></tr></thead>
+<tbody>
+{% for attempt in attempts %}
+<tr><td>{{ attempt.quiz.title }}</td><td>{{ attempt.score }}%</td><td>{{ attempt.end_time|date:"M d, Y" }}</td><td><a href="{% url 'quizzes:quiz_result' attempt.quiz.pk attempt.pk %}" class="btn btn-sm btn-info">View</a></td></tr>
+{% empty %}<tr><td colspan="4" class="text-center">No completed quizzes yet.</td></tr>
+{% endfor %}
+</tbody></table></div>
+{% endblock %}

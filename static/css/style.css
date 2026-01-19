@@ -1,0 +1,217 @@
+/* Custom styles for Quiz Platform */
+
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #0dcaf0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Badge colors for difficulty levels */
+.badge.bg-easy {
+    background-color: var(--success-color) !important;
+}
+
+.badge.bg-medium {
+    background-color: var(--warning-color) !important;
+    color: #000 !important;
+}
+
+.badge.bg-hard {
+    background-color: var(--danger-color) !important;
+}
+
+/* Quiz card styling */
+.quiz-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.quiz-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Question styling */
+.question-container {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.question-number {
+    background: var(--primary-color);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* Answer choices */
+.answer-choice {
+    display: block;
+    padding: 15px;
+    margin: 10px 0;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.answer-choice:hover {
+    border-color: var(--primary-color);
+    background: #f8f9fa;
+}
+
+.answer-choice input[type="radio"],
+.answer-choice input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.answer-choice.correct {
+    border-color: var(--success-color);
+    background: #d1e7dd;
+}
+
+.answer-choice.incorrect {
+    border-color: var(--danger-color);
+    background: #f8d7da;
+}
+
+/* Timer styling */
+.timer {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    font-size: 1.2rem;
+    font-weight: bold;
+    z-index: 1000;
+}
+
+.timer.warning {
+    background: #fff3cd;
+    border: 2px solid var(--warning-color);
+}
+
+.timer.danger {
+    background: #f8d7da;
+    border: 2px solid var(--danger-color);
+}
+
+/* Progress bar */
+.quiz-progress {
+    margin-bottom: 30px;
+}
+
+/* Profile page */
+.profile-avatar {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Statistics cards */
+.stat-card {
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.stat-card h3 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.stat-card p {
+    margin: 5px 0 0;
+    color: #6c757d;
+}
+
+/* Forms */
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Buttons */
+.btn {
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-weight: 500;
+}
+
+/* Jumbotron (Bootstrap 5 removed it) */
+.jumbotron {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+/* Table improvements */
+.table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+}
+
+/* Loading spinner */
+.spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid var(--primary-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .timer {
+        position: static;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/* Accessibility improvements */
+a:focus, button:focus, input:focus, textarea:focus, select:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+    .navbar, footer, .btn, .timer {
+        display: none;
+    }
+}

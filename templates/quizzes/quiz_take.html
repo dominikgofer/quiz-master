@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Take Quiz - {{ quiz.title }}{% endblock %}
+
+{% block content %}
+{% if quiz.time_limit %}
+<div id="quiz-timer" class="timer" data-time-limit="{{ quiz.time_limit }}" data-start-time="{{ attempt.start_time|date:'c' }}">
+    Time: --:--
+</div>
+{% endif %}
+
+<h1>{{ quiz.title }}</h1>
+
+<div class="quiz-progress mb-4">
+    <p class="text-muted">Answer all questions and click Submit when done.</p>
+</div>
+
+<form method="post" id="quiz-form" data-quiz-id="{{ quiz.pk }}">
+    {% csrf_token %}
+    
+    {% for question in questions %}
+    <div class="question-container">
+        <span class="question-number">Question {{ forloop.counter }} of {{ questions|length }}</span>
+        <h4>{{ question.text }}</h4>
+        
+        {% if question.image %}
+        <img src="{{ question.image.url }}" alt="Question image" class="img-fluid mb-3" style="max-width: 500px;">
+        {% endif %}
+        
+        <div class="answers mt-3">
+            {% if question.question_type == 'single' or question.question_type == 'truefalse' %}
+                {% for answer in question.answers.all %}
+                <label class="answer-choice">
+                    <input type="radio" name="question_{{ question.id }}" value="{{ answer.id }}" required>
+                    {{ answer.text }}
+                </label>
+                {% endfor %}
+            {% elif question.question_type == 'multiple' %}
+                {% for answer in question.answers.all %}
+                <label class="answer-choice">
+                    <input type="checkbox" name="question_{{ question.id }}" value="{{ answer.id }}">
+                    {{ answer.text }}
+                </label>
+                {% endfor %}
+            {% elif question.question_type == 'text' %}
+                <textarea name="question_{{ question.id }}" class="form-control" rows="4" required></textarea>
+            {% endif %}
+        </div>
+        
+        <p class="text-muted mt-2"><small>Points: {{ question.points }}</small></p>
+    </div>
+    {% endfor %}
+    
+    <div class="mt-4">
+        <button type="submit" id="quiz-submit-btn" class="btn btn-primary btn-lg">
+            <i class="fas fa-check"></i> Submit Quiz
+        </button>
+        <a href="{% url 'quizzes:quiz_detail' quiz.pk %}" class="btn btn-secondary btn-lg">Cancel</a>
+    </div>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Timer functionality is in main.js
+</script>
+{% endblock %}

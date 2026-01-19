@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}Quiz Result - {{ quiz.title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card">
+            <div class="card-header {% if attempt.is_passed %}bg-success{% else %}bg-danger{% endif %} text-white">
+                <h3>
+                    {% if attempt.is_passed %}
+                    <i class="fas fa-check-circle"></i> Passed!
+                    {% else %}
+                    <i class="fas fa-times-circle"></i> Not Passed
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="card-body">
+                <h2>{{ quiz.title }}</h2>
+                
+                <div class="row text-center my-4">
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <h3>{{ attempt.score }}%</h3>
+                            <p>Your Score</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <h3>{{ attempt.points_earned }}/{{ attempt.total_points }}</h3>
+                            <p>Points</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <h3>{{ quiz.passing_score }}%</h3>
+                            <p>Passing Score</p>
+                        </div>
+                    </div>
+                </div>
+                
+                {% if attempt.time_taken %}
+                <p><strong>Time Taken:</strong> {{ attempt.time_taken }}</p>
+                {% endif %}
+                
+                <hr>
+                
+                {% if show_answers %}
+                <h4 class="mt-4">Review Your Answers</h4>
+                
+                {% for user_answer in user_answers %}
+                <div class="question-container {% if user_answer.is_correct %}border-success{% else %}border-danger{% endif %}">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h5>Question {{ forloop.counter }}</h5>
+                        {% if user_answer.is_correct %}
+                        <span class="badge bg-success"><i class="fas fa-check"></i> Correct</span>
+                        {% else %}
+                        <span class="badge bg-danger"><i class="fas fa-times"></i> Incorrect</span>
+                        {% endif %}
+                    </div>
+                    
+                    <p class="mt-2"><strong>{{ user_answer.question.text }}</strong></p>
+                    
+                    {% if user_answer.question.question_type == 'text' %}
+                        <p><strong>Your Answer:</strong> {{ user_answer.text_answer }}</p>
+                    {% else %}
+                        <p><strong>Your Answer:</strong></p>
+                        <ul>
+                        {% for answer in user_answer.selected_answers.all %}
+                            <li>{{ answer.text }}</li>
+                        {% endfor %}
+                        </ul>
+                        
+                        <p><strong>Correct Answer:</strong></p>
+                        <ul>
+                        {% for answer in user_answer.question.answers.all %}
+                            {% if answer.is_correct %}
+                            <li class="text-success">{{ answer.text }}</li>
+                            {% endif %}
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                    
+                    {% if user_answer.question.explanation %}
+                    <div class="alert alert-info mt-2">
+                        <strong>Explanation:</strong> {{ user_answer.question.explanation }}
+                    </div>
+                    {% endif %}
+                    
+                    <p class="text-muted mt-2">
+                        <small>Points: {{ user_answer.points_earned }}/{{ user_answer.question.points }}</small>
+                    </p>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="alert alert-info">
+                    Correct answers are not shown for this quiz.
+                </div>
+                {% endif %}
+                
+                <div class="mt-4">
+                    <a href="{% url 'quizzes:quiz_detail' quiz.pk %}" class="btn btn-primary">Back to Quiz</a>
+                    <a href="{% url 'quizzes:dashboard' %}" class="btn btn-secondary">Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
