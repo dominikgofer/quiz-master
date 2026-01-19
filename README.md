@@ -1,409 +1,409 @@
-# Platforma Quizowa - Projekt Django MPA
+# Quiz Platform - Django MPA Project
 
-W pełni funkcjonalna platforma quizowa zbudowana z użyciem Django, implementująca architekturę Multi-Page Application (MPA) z szablonami. Projekt spełnia wymagania kursu *Techniki Internetowe*.
+A fully functional quiz platform built with Django, implementing a Multi-Page Application (MPA) architecture with templates. This project conforms to the course requirements for *Techniki Internetowe*.
 
-## 📋 Spis treści
+## 📋 Table of Contents
 
-- [Funkcjonalności](#funkcjonalności)
-- [Stos technologiczny](#stos-technologiczny)
-- [Instalacja i konfiguracja](#instalacja-i-konfiguracja)
-- [Użytkowanie](#użytkowanie)
-- [Struktura projektu](#struktura-projektu)
-- [Testowe konta użytkowników](#testowe-konta-użytkowników)
-- [Rozwój projektu](#rozwój-projektu)
-- [Zgodność ze standardami](#zgodność-ze-standardami)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Installation & Setup](#installation--setup)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Test Accounts](#test-accounts)
+- [Development](#development)
+- [Standards Compliance](#standards-compliance)
 
-## ✨ Funkcjonalności
+## ✨ Features
 
-### Role użytkowników i autoryzacja
-- **Dwupoziomowy system autoryzacji:**
-  - **Studenci:** Rozwiązywanie quizów, przeglądanie wyników, historia i rankingi
-  - **Nauczyciele:** Tworzenie/edycja quizów, zarządzanie pytaniami, raporty i analityka
-- Autoryzacja oparta na sesjach z wbudowanym systemem Django
-- Rejestracja użytkowników z wyborem roli
-- Zarządzanie profilem z obsługą awatarów
+### User Roles & Authentication
+- **Two-tier authorization system:**
+  - **Students:** Take quizzes, view results, track history, and see leaderboards
+  - **Teachers:** Create/edit quizzes, manage questions, view reports and analytics
+- Session-based authentication with Django's built-in auth system
+- User registration with role selection
+- Profile management with avatar support
 
-### Zarządzanie quizami (Nauczyciele)
-- Tworzenie i edycja quizów z różnymi ustawieniami:
-  - Kategorie, poziomy trudności, limity czasowe
-  - Próg zaliczenia, maksymalna liczba prób
-  - Losowanie pytań, ustawienia wyświetlania odpowiedzi
-- Wiele typów pytań:
-  - Jednokrotnego wyboru
-  - Wielokrotnego wyboru
-  - Prawda/Fałsz
-  - Krótka odpowiedź (tekst)
-- Dodawanie wyjaśnień i obrazów do pytań
-- Szczegółowe raporty i analityka
+### Quiz Management (Teachers)
+- Create and edit quizzes with various settings:
+  - Categories, difficulty levels, time limits
+  - Passing scores, maximum attempts
+  - Question randomization, answer display settings
+- Multiple question types:
+  - Single choice
+  - Multiple choice
+  - True/False
+  - Short answer (text)
+- Add explanations and images to questions
+- View detailed reports and analytics
 
-### Rozwiązywanie quizów (Studenci)
-- Przeglądanie dostępnych quizów z filtrowaniem i wyszukiwaniem
-- Timer w czasie rzeczywistym dla quizów czasowych
-- Auto-zapis postępu (localStorage)
-- Natychmiastowy feedback po zakończeniu
-- Przeglądanie szczegółowych wyników z wyjaśnieniami
-- Śledzenie historii i wyników
+### Taking Quizzes (Students)
+- Browse available quizzes with filtering and search
+- Real-time timer for timed quizzes
+- Auto-save progress (localStorage)
+- Immediate feedback on completion
+- View detailed results with explanations
+- Track quiz history and performance
 
-### Dodatkowe funkcjonalności
-- Rankingi (per quiz i globalne)
-- Dashboard ze statystykami dla obu ról
-- Responsywny design z Bootstrap 5
-- Zgodność z HTML5 W3C
-- Interaktywne funkcje z vanilla JavaScript
+### Additional Features
+- Leaderboards (per quiz and overall)
+- Dashboard with statistics for both roles
+- Responsive design with Bootstrap 5
+- W3C HTML5 compliant
+- Interactive features with vanilla JavaScript
 
-## 🛠 Stos technologiczny
+## 🛠 Technology Stack
 
 - **Backend:** Django 6.0+ (Python 3.12+)
-- **Baza danych:** SQLite (deweloperska)
+- **Database:** SQLite (development)
 - **Frontend:** HTML5, CSS3, JavaScript (ES6+)
-- **Framework CSS:** Bootstrap 5.3
-- **Ikony:** Font Awesome 6.4
-- **Architektura:** MPA (Multi-Page Application) z szablonami Django
-- **Zarządzanie pakietami:** uv (zalecane) lub pip
+- **CSS Framework:** Bootstrap 5.3
+- **Icons:** Font Awesome 6.4
+- **Architecture:** MPA (Multi-Page Application) with Django templates
+- **Package Management:** uv (recommended) or pip
 
-## 🚀 Instalacja i konfiguracja
+## 🚀 Installation & Setup
 
-### Wymagania wstępne
-- Python 3.12 lub nowszy
-- uv package manager (zalecane) lub pip
+### Prerequisites
+- Python 3.12 or newer
+- uv package manager (recommended) or pip
 - Git
 
-### Instrukcje instalacji
+### Setup Instructions
 
-1. **Sklonuj repozytorium:**
+1. **Clone the repository:**
    ```bash
    git clone <repository-url>
    cd techniki-internetowe
    ```
 
-2. **Zainstaluj zależności:**
+2. **Install dependencies:**
    ```bash
-   # Używając uv (zalecane)
+   # Using uv (recommended)
    uv pip install -e .
    
-   # Lub używając pip
+   # Or using pip
    pip install -e .
    ```
 
-3. **Zainstaluj zależności deweloperskie (opcjonalnie):**
+3. **Install development dependencies (optional):**
    ```bash
    uv pip install -e ".[dev]"
    ```
 
-4. **Wykonaj migracje bazy danych:**
+4. **Run database migrations:**
    ```bash
    uv run python manage.py migrate
    ```
 
-5. **Załaduj przykładowe dane:**
+5. **Load sample data:**
    ```bash
    uv run python manage.py load_sample_data
    ```
    
-   To polecenie utworzy:
-   - Przykładowe kategorie (Python, JavaScript, Bazy danych, Web Development)
-   - Testowych użytkowników (nauczyciel i student)
-   - Przykładowe quizy z pytaniami
-   - Przykładowe wyniki
+   This command creates:
+   - Sample categories (Python, JavaScript, Databases, Web Development)
+   - Test users (teacher and student)
+   - Sample quizzes with questions
+   - Sample results
 
-6. **Utwórz superużytkownika (opcjonalnie):**
+6. **Create a superuser (optional):**
    ```bash
    uv run python manage.py createsuperuser
    ```
 
-7. **Uruchom serwer deweloperski:**
+7. **Run the development server:**
    ```bash
-   # Bezpośrednio
+   # Directly
    uv run python manage.py runserver
    
-   # Lub używając skryptu pomocniczego
+   # Or using the helper script
    ./utils/run_django.sh
    ```
 
-8. **Otwórz aplikację w przeglądarce:**
-   - Strona główna: http://localhost:8000/
-   - Panel administracyjny: http://localhost:8000/admin/
+8. **Access the application:**
+   - Homepage: http://localhost:8000/
+   - Admin panel: http://localhost:8000/admin/
 
-## 📖 Użytkowanie
+## 📖 Usage
 
-### Dla studentów
+### For Students
 
-1. **Rejestracja:**
-   - Przejdź do strony rejestracji
-   - Wybierz rolę "Student"
-   - Wypełnij formularz
+1. **Registration:**
+   - Go to the registration page
+   - Select "Student" role
+   - Fill out the form
 
-2. **Rozwiązywanie quizów:**
-   - Przeglądaj dostępne quizy na stronie "Browse Quizzes"
-   - Kliknij "Take Quiz" aby rozpocząć
-   - Odpowiadaj na pytania
-   - Zobacz wyniki i wyjaśnienia po zakończeniu
+2. **Taking Quizzes:**
+   - Browse available quizzes on "Browse Quizzes" page
+   - Click "Take Quiz" to start
+   - Answer the questions
+   - View results and explanations after completion
 
-3. **Śledzenie postępów:**
-   - Dashboard - statystyki i ostatnie wyniki
-   - My History - pełna historia rozwiązanych quizów
-   - Leaderboard - rankingi
+3. **Tracking Progress:**
+   - Dashboard - statistics and recent results
+   - My History - complete history of solved quizzes
+   - Leaderboard - rankings
 
-### Dla nauczycieli
+### For Teachers
 
-1. **Tworzenie quizu:**
-   - Przejdź do "Create Quiz"
-   - Wypełnij informacje o quizie (tytuł, opis, kategoria, trudność)
-   - Ustaw parametry (limit czasowy, liczba prób, próg zaliczenia)
-   - Zapisz quiz
+1. **Creating a Quiz:**
+   - Go to "Create Quiz"
+   - Fill in quiz information (title, description, category, difficulty)
+   - Set parameters (time limit, number of attempts, passing threshold)
+   - Save the quiz
 
-2. **Dodawanie pytań:**
-   - Otwórz quiz i kliknij "Manage Questions"
-   - Dodaj pytania różnych typów
-   - Określ poprawne odpowiedzi
-   - Dodaj wyjaśnienia (opcjonalnie)
+2. **Adding Questions:**
+   - Open the quiz and click "Manage Questions"
+   - Add questions of various types
+   - Specify correct answers
+   - Add explanations (optional)
 
-3. **Analityka:**
-   - Przejdź do "Reports" dla wybranego quizu
-   - Zobacz statystyki prób
-   - Analizuj najtrudniejsze pytania
+3. **Analytics:**
+   - Go to "Reports" for the selected quiz
+   - View attempt statistics
+   - Analyze the most difficult questions
 
-## 📁 Struktura projektu
+## 📁 Project Structure
 
 ```
 techniki-internetowe/
-├── accounts/              # Aplikacja zarządzania użytkownikami
-│   ├── models.py         # Model profilu użytkownika
-│   ├── views.py          # Widoki rejestracji, logowania, profilu
-│   ├── forms.py          # Formularze użytkownika
-│   └── urls.py           # Routing aplikacji accounts
-├── quizzes/              # Główna aplikacja quizów
-│   ├── models.py         # Modele: Quiz, Question, Answer, Result
-│   ├── views.py          # Widoki quizów, pytań, wyników
-│   ├── forms.py          # Formularze quizów i pytań
-│   ├── urls.py           # Routing aplikacji quizzes
-│   └── management/       # Komendy Django
+├── accounts/              # User management application
+│   ├── models.py         # User profile model
+│   ├── views.py          # Registration, login, profile views
+│   ├── forms.py          # User forms
+│   └── urls.py           # Accounts app routing
+├── quizzes/              # Main quiz application
+│   ├── models.py         # Models: Quiz, Question, Answer, Result
+│   ├── views.py          # Quiz, question, result views
+│   ├── forms.py          # Quiz and question forms
+│   ├── urls.py           # Quizzes app routing
+│   └── management/       # Django commands
 │       └── commands/
 │           └── load_sample_data.py
-├── quiz_platform/        # Ustawienia projektu
-│   ├── settings.py       # Konfiguracja Django
-│   ├── urls.py           # Główny routing
+├── quiz_platform/        # Project settings
+│   ├── settings.py       # Django configuration
+│   ├── urls.py           # Main routing
 │   └── wsgi.py           # WSGI config
-├── templates/            # Szablony HTML
-│   ├── base.html         # Szablon bazowy
-│   ├── accounts/         # Szablony kont użytkowników
-│   └── quizzes/          # Szablony quizów
-├── static/               # Pliki statyczne
+├── templates/            # HTML templates
+│   ├── base.html         # Base template
+│   ├── accounts/         # User account templates
+│   └── quizzes/          # Quiz templates
+├── static/               # Static files
 │   ├── css/
-│   │   └── style.css     # Niestandardowe style
+│   │   └── style.css     # Custom styles
 │   └── js/
-│       └── main.js       # JavaScript aplikacji
-├── utils/                # Narzędzia pomocnicze
-│   └── run_django.sh     # Skrypt uruchamiający serwer
-├── specification/        # Dokumentacja projektu
-├── manage.py             # Narzędzie Django CLI
-├── pyproject.toml        # Konfiguracja projektu i zależności
-└── README.md             # Ten plik
+│       └── main.js       # Application JavaScript
+├── utils/                # Helper utilities
+│   └── run_django.sh     # Server runner script
+├── specification/        # Project documentation
+├── manage.py             # Django CLI tool
+├── pyproject.toml        # Project configuration and dependencies
+└── README.md             # This file
 ```
 
-## 👥 Testowe konta użytkowników
+## 👥 Test Accounts
 
-Po załadowaniu przykładowych danych dostępne są następujące konta:
+After loading sample data, the following accounts are available:
 
-### Nauczyciel
-- **Login:** teacher
-- **Hasło:** teacher123
-- **Uprawnienia:** Tworzenie quizów, zarządzanie pytaniami, przeglądanie raportów
+### Teacher
+- **Username:** teacher
+- **Password:** teacher123
+- **Permissions:** Create quizzes, manage questions, view reports
 
 ### Student
-- **Login:** student
-- **Hasło:** student123
-- **Uprawnienia:** Rozwiązywanie quizów, przeglądanie wyników, rankingi
+- **Username:** student
+- **Password:** student123
+- **Permissions:** Take quizzes, view results, leaderboards
 
-## 🔧 Rozwój projektu
+## 🔧 Development
 
-### Komendy deweloperskie
+### Development Commands
 
-**Uruchomienie serwera:**
+**Run server:**
 ```bash
 uv run python manage.py runserver
-# lub
+# or
 ./utils/run_django.sh
 ```
 
-**Tworzenie migracji:**
+**Create migrations:**
 ```bash
 uv run python manage.py makemigrations
 ```
 
-**Aplikowanie migracji:**
+**Apply migrations:**
 ```bash
 uv run python manage.py migrate
 ```
 
-**Tworzenie superużytkownika:**
+**Create superuser:**
 ```bash
 uv run python manage.py createsuperuser
 ```
 
-**Zbieranie plików statycznych (produkcja):**
+**Collect static files (production):**
 ```bash
 uv run python manage.py collectstatic
 ```
 
-**Walidacja HTML:**
+**Validate HTML:**
 ```bash
 uv run python validate_html.py
 ```
 
-**Testy:**
+**Run tests:**
 ```bash
 uv run python manage.py test
 ```
 
-### Struktura bazy danych
+### Database Structure
 
-**Główne modele:**
+**Main models:**
 
-- **User** - Wbudowany model Django
-- **Profile** - Rozszerzenie użytkownika (rola, awatar, statystyki)
-- **Category** - Kategorie quizów
-- **Quiz** - Quizy z ustawieniami
-- **Question** - Pytania quizowe
-- **Answer** - Odpowiedzi do pytań
-- **QuizAttempt** - Próby rozwiązania quizu
-- **UserAnswer** - Odpowiedzi użytkownika
+- **User** - Django built-in model
+- **Profile** - User extension (role, avatar, statistics)
+- **Category** - Quiz categories
+- **Quiz** - Quizzes with settings
+- **Question** - Quiz questions
+- **Answer** - Question answers
+- **QuizAttempt** - Quiz attempt records
+- **UserAnswer** - User responses
 
-### Główne ścieżki URL
+### Main URL Paths
 
-- `/` - Strona główna z wyróżnionymi quizami
-- `/quizzes/` - Przeglądaj wszystkie quizy
-- `/quiz/<id>/` - Szczegóły quizu
-- `/quiz/<id>/take/` - Rozwiąż quiz
-- `/quiz/<id>/result/<attempt_id>/` - Wyniki
-- `/dashboard/` - Panel użytkownika
-- `/accounts/login/` - Logowanie
-- `/accounts/register/` - Rejestracja
-- `/accounts/profile/` - Profil użytkownika
-- `/admin/` - Panel administracyjny Django
+- `/` - Homepage with featured quizzes
+- `/quizzes/` - Browse all quizzes
+- `/quiz/<id>/` - Quiz details
+- `/quiz/<id>/take/` - Take quiz
+- `/quiz/<id>/result/<attempt_id>/` - Results
+- `/dashboard/` - User dashboard
+- `/accounts/login/` - Login
+- `/accounts/register/` - Registration
+- `/accounts/profile/` - User profile
+- `/admin/` - Django admin panel
 
-### Funkcje bezpieczeństwa
+### Security Features
 
-- Ochrona CSRF na wszystkich formularzach
-- Zapobieganie SQL injection (Django ORM)
-- Zapobieganie XSS (auto-escape w szablonach)
-- Hashowanie haseł (wbudowane w Django)
-- Bezpieczeństwo sesji
-- Sprawdzanie uprawnień dla widoków nauczycieli
+- CSRF protection on all forms
+- SQL injection prevention (Django ORM)
+- XSS prevention (template auto-escaping)
+- Password hashing (Django built-in)
+- Session security
+- Permission checks for teacher views
 
-## 📝 Zgodność ze standardami
+## 📝 Standards Compliance
 
-- **HTML5:** Wszystkie szablony są zgodne z HTML5
-- **W3C Validation:** Kod HTML przechodzi walidację W3C
-- **Responsywność:** Aplikacja działa na urządzeniach mobilnych, tabletach i desktopach
-- **Dostępność:** Przestrzeganie podstawowych zasad dostępności
-- **Kodowanie:** Wszystkie pliki używają UTF-8
-- **Przeglądarki:** Testowane w Firefox, Chrome, Edge
+- **HTML5:** All templates are HTML5 compliant
+- **W3C Validation:** HTML code passes W3C validation
+- **Responsiveness:** Works on mobile devices, tablets, and desktops
+- **Accessibility:** Follows basic accessibility guidelines
+- **Encoding:** All files use UTF-8
+- **Browsers:** Tested in Firefox, Chrome, Edge
 
-### Walidacja HTML5
+### HTML5 Validation
 
-Projekt zawiera skrypt do sprawdzania zgodności z HTML5:
+The project includes a script to check HTML5 compliance:
 
 ```bash
 uv run python validate_html.py
 ```
 
-Skrypt:
-- Renderuje szablony Django
-- Waliduje zgodność ze standardem HTML5 W3C
-- Wyświetla błędy i ostrzeżenia z numerami linii
-- Generuje raport podsumowujący
+The script:
+- Renders Django templates
+- Validates against W3C HTML5 standards
+- Shows errors and warnings with line numbers
+- Generates a summary report
 
-## 🎨 Dostosowywanie
+## 🎨 Customization
 
-### Dodawanie nowych kategorii
+### Adding New Categories
 
-**Przez panel administracyjny:**
-1. Przejdź do `/admin/` → Categories → Add category
+**Via admin panel:**
+1. Go to `/admin/` → Categories → Add category
 
-**Przez Django shell:**
+**Via Django shell:**
 ```python
 from quizzes.models import Category
 Category.objects.create(
-    name="Matematyka",
-    description="Quizy matematyczne",
+    name="Mathematics",
+    description="Math quizzes",
     color="#3498db",
     icon="fas fa-calculator"
 )
 ```
 
-### Tworzenie quizów
+### Creating Quizzes
 
-1. Zaloguj się jako nauczyciel
-2. Kliknij "Create Quiz" w nawigacji
-3. Wypełnij szczegóły i ustawienia quizu
-4. Dodaj pytania i odpowiedzi
-5. Opublikuj gdy gotowe
+1. Login as a teacher
+2. Click "Create Quiz" in navigation
+3. Fill in quiz details and settings
+4. Add questions and answers
+5. Publish when ready
 
-## 🚀 Wdrożenie produkcyjne
+## 🚀 Production Deployment
 
-Dla wdrożenia produkcyjnego:
+For production deployment:
 
-1. **Konfiguracja Django:**
-   - Ustaw `DEBUG = False`
-   - Skonfiguruj `ALLOWED_HOSTS`
-   - Użyj zmiennych środowiskowych dla sekretów
+1. **Django Configuration:**
+   - Set `DEBUG = False`
+   - Configure `ALLOWED_HOSTS`
+   - Use environment variables for secrets
 
-2. **Baza danych:**
-   - Przejdź na PostgreSQL lub MySQL
-   - Skonfiguruj connection pooling
+2. **Database:**
+   - Switch to PostgreSQL or MySQL
+   - Configure connection pooling
 
-3. **Pliki statyczne:**
-   - Uruchom `collectstatic`
-   - Skonfiguruj CDN (opcjonalnie)
+3. **Static Files:**
+   - Run `collectstatic`
+   - Configure CDN (optional)
 
-4. **Serwer WWW:**
-   - Użyj Gunicorn jako WSGI server
-   - Skonfiguruj Nginx jako reverse proxy
-   - Ustaw certyfikat SSL
+4. **Web Server:**
+   - Use Gunicorn as WSGI server
+   - Configure Nginx as reverse proxy
+   - Set up SSL certificate
 
-5. **Bezpieczeństwo:**
-   - Włącz HTTPS
-   - Skonfiguruj nagłówki bezpieczeństwa
-   - Włącz rate limiting
+5. **Security:**
+   - Enable HTTPS
+   - Configure security headers
+   - Enable rate limiting
 
-## ✅ Zgodność z wymaganiami projektu
+## ✅ Project Requirements Compliance
 
-✅ **Architektura MPA:** Django templates z renderowaniem po stronie serwera  
-✅ **Baza danych:** SQLite (deweloperska), możliwość zmiany na PostgreSQL/MySQL  
-✅ **Autoryzacja:** Dwupoziomowy system ról (Student/Nauczyciel)  
-✅ **Zarządzanie sesjami:** Framework sesji Django  
-✅ **Walidacja HTML5:** Zgodność z W3C, zawiera skrypt walidacyjny  
-✅ **Kodowanie UTF-8:** Wszystkie pliki używają UTF-8  
-✅ **Responsywny design:** Działa w Firefox, Chrome, Edge  
-✅ **Ulepszenia po stronie klienta:** JavaScript dla timerów, auto-zapisu, walidacji  
+✅ **MPA Architecture:** Django templates with server-side rendering  
+✅ **Database:** SQLite (development), can switch to PostgreSQL/MySQL  
+✅ **Authorization:** Two-tier role system (Student/Teacher)  
+✅ **Session Management:** Django session framework  
+✅ **HTML5 Validation:** W3C compliant, includes validation script  
+✅ **UTF-8 Encoding:** All files use UTF-8  
+✅ **Responsive Design:** Works in Firefox, Chrome, Edge  
+✅ **Client-side Enhancement:** JavaScript for timers, auto-save, validation  
 
-## 🐛 Znane ograniczenia
+## 🐛 Known Limitations
 
-- SQLite jako baza danych (zalecane PostgreSQL dla produkcji)
-- Brak cache'owania (zalecane Redis dla produkcji)
-- Obrazy przechowywane lokalnie (zalecane CDN dla produkcji)
-- Brak eksportu wyników do CSV/PDF (w planach)
+- SQLite as database (PostgreSQL recommended for production)
+- No caching (Redis recommended for production)
+- Images stored locally (CDN recommended for production)
+- No CSV/PDF export for results (planned)
 
-## 🤝 Wkład w projekt
+## 🤝 Contributing
 
-1. Fork repozytorium
-2. Utwórz branch z funkcją (`git checkout -b feature/nazwa-funkcji`)
-3. Commituj zmiany (`git commit -m 'Dodaj: opis funkcji'`)
-4. Push do brancha (`git push origin feature/nazwa-funkcji`)
-5. Otwórz Pull Request
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/feature-name`)
+3. Commit your changes (`git commit -m 'Add: feature description'`)
+4. Push to the branch (`git push origin feature/feature-name`)
+5. Open a Pull Request
 
-## 📄 Licencja
+## 📄 License
 
-Projekt edukacyjny dla kursu *Techniki Internetowe*.
+Educational project for the *Techniki Internetowe* course.
 
-## 📞 Kontakt
+## 📞 Contact
 
-W przypadku pytań dotyczących projektu, skontaktuj się z prowadzącym kurs.
+For questions about the project, contact the course instructor.
 
 ---
 
-**Projekt:** Techniki Internetowe  
-**Data:** Styczeń 2026  
-**Wersja:** 1.0
+**Project:** Techniki Internetowe  
+**Date:** January 2026  
+**Version:** 1.0
 
